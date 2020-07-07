@@ -2,6 +2,7 @@ package otgoredis
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/opentracing/opentracing-go"
 	"strings"
@@ -30,7 +31,7 @@ func (h *OpenTracingHook) BeforeProcess(ctx context.Context, cmd redis.Cmder) (c
 	b := make([]byte, 32)
 	b = appendCmd(b, cmd)
 
-	span, newContext := opentracing.StartSpanFromContextWithTracer(ctx, h.Tracker, cmd.FullName())
+	span, newContext := opentracing.StartSpanFromContextWithTracer(ctx, h.Tracker, fmt.Sprintf("redis %s", cmd.FullName()))
 	span.SetTag("db.system", "redis")
 	span.SetTag("redis.cmd", String(b))
 
@@ -73,7 +74,7 @@ func (h *OpenTracingHook) BeforeProcessPipeline(ctx context.Context, cmds []redi
 		}
 	}
 
-	span, newContext := opentracing.StartSpanFromContextWithTracer(ctx, h.Tracker, "pipeline "+strings.Join(unqNames, " "))
+	span, newContext := opentracing.StartSpanFromContextWithTracer(ctx, h.Tracker, fmt.Sprintf("redis pipeline %s", strings.Join(unqNames, " ")))
 	span.SetTag("db.system", "redis")
 	span.SetTag("redis.num_cmd", len(cmds))
 	span.SetTag("redis.cmds", String(b))
