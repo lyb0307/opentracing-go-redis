@@ -10,8 +10,6 @@ go get -u github.com/lyb0307/opentracing-go-redis
 
 ## Usage
 
-Clone redis client `c := otredis.WrapRedisClient(ctx, c)` with a span.
-
 Example:
 
 ```go
