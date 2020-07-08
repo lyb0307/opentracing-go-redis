@@ -24,12 +24,14 @@ import (
 )
 
 func main() {
+    tracer := ... // init your tracer
+
     rdb := redis.NewClient(&redis.Options{
         Addr: "localhost:6379",
         DB: 0,
     })
     
-    rdb.AddHook(otgoredis.NewHook())
+    rdb.AddHook(otgoredis.NewHookWithTracer(tracer))
 }
 ```
 
