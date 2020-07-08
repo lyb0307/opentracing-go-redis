@@ -2,6 +2,8 @@
 
 [OpenTracing](http://opentracing.io/) instrumentation for [go-redis](https://github.com/go-redis/redis).
 
+This instrumentation bases on internal tracing of [go-redis](https://github.com/go-redis/redis/blob/master/redisext/otel.go).
+
 ## Install
 
 ```
