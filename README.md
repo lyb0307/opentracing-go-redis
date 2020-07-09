@@ -37,4 +37,4 @@ func main() {
 
 ## License
 
-[WTFPL](LICENSE)
+[MIT](LICENSE)
